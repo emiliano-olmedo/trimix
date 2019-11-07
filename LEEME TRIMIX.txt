@@ -1,0 +1,18 @@
+Buenas tardes.
+
+El siguiente proyecto fue el que logré desarrollar con el tiempo establecido.
+
+Grabé un video del programa ejecutándose por si hay algún problema con la base de datos y demás (está en la carpeta resources).
+
+Utilicé JAVA8, JPA, JSF, PrimeFaces, MAVEN, y la base de datos de ORACLE, que son las herramientas con las cuales aprendí en la 
+capacitación de Ayi & Asociados.
+
+Si bien no me dio el tiempo para investigar acerca de lo solicitado, en el curso presencial de Educación IT que estoy realizando, estamos
+desarrollando un ABM con Hibernate y Spring, por lo cual, lo aprenderé en estos días.
+
+Por otra parte, no tengo dificultades a la hora de aprender nuevas tecnologías, y utilizarlas! Pero considero que el tiempo fue muy escaso
+para haber aplicado todo en este desarrollo.
+
+Muchas gracias por leer esta nota!
+
+Olmedo Emiliano.

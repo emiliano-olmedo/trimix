@@ -1,0 +1,189 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>TRIMIX</title>
+</h:head>
+
+<h:body>
+
+<script type="text/javascript">    
+    PrimeFaces.locales['es'] = {
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+        
+    };
+</script>
+ 
+<style type="text/css">
+    .value {
+        font-weight: bold;
+    }
+</style>
+
+
+
+	<h:form id="form">
+		<p:growl id="msg" />
+		<p:dataTable id="tabla" var="per" value="#{perBean.listaPersona}"
+			rowKey="#{per.id}" editable="true" selectionMode="single"
+			editMode="cell" 
+			selection="#{perBean.registroSeleccionado}">
+			<p:ajax event="rowEdit" listener="#{perBean.eliminar}"
+				update=":form:msg" />
+			<p:ajax event="rowEditCancel" listener="#{perBean.cancelar}"
+				update=":form:msg" />
+			<p:ajax event="cellEdit" listener="#{perBean.actualizar}"
+				update=":form:msg" />
+			<p:column style="width:40px;" headerText="ID">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{per.id}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{per.id}" style="width:96%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column headerText="Nombre">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{per.nombre}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{per.nombre}" style="width:96%" />	
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column headerText="Apellido">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{per.apellido}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{per.apellido}" style="width:96%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column headerText="N° Documento">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{per.numeroDni}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{per.numeroDni}" style="width:96%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column headerText="Tipo Documento">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{per.tipoDni}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{per.tipoDni}" style="width:96%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column headerText="Fecha de Nacimiento">
+				<p:cellEditor>
+					<f:facet name="output">
+					<h:outputText value="#{per.fechaNacimiento}">
+                <f:convertDateTime pattern="dd/MM/yyyy" />
+            </h:outputText>
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{per.fechaNacimiento}" style="width:96%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column style="width:32px;text-align: center">
+				<p:column>
+					<p:rowEditor />
+				</p:column>
+			</p:column>
+		</p:dataTable>
+
+		<p:contextMenu for="tabla" widgetVar="cMenu">
+			<p:menuitem value="Editar celda" icon="pi pi-search"
+				onclick="PF('cellCars').showCellEditor();return false;" />
+			<p:menuitem value="Esconder menu" icon="pi pi-times"
+				onclick="PF('cMenu').hide()" />
+		</p:contextMenu>
+	</h:form>
+	<p:commandButton value="Eliminar" actionListener="#{perBean.eliminar}"
+		update="form" icon="ui-icon-trash" partialSubmit="true">
+		<p:confirm message="Desea eliminar el registro?" header="Aviso"
+			icon="ui-icon-alert" />
+		<p:confirmDialog global="true">
+			<p:commandButton value="Si" type="button" icon="ui.icon.check"
+				styleClass="ui-confirmdialog-yes" />
+			<p:commandButton value="No" type="button" icon="ui.icon.check"
+				styleClass="ui-confirmdialog-no" />
+		</p:confirmDialog>
+	</p:commandButton>
+	<h:form id="form2">
+    <p:growl id="msgs" showDetail="true" />
+     
+
+		<p:commandButton value="Agregar registro" type="button" update="form2:popup"
+			onclick="PF('dlg').show()" />
+		<p:commandButton value="Ocultar formulario" type="button"
+			onclick="PF('dlg').hide()" />
+		<p:dialog id="popup" header="Complete con sus datos" widgetVar="dlg">
+
+			<p:panelGrid columns="2" styleClass="ui-noborder">
+				<p:outputLabel for="id" value="ID: " style="border:none;width:5px" />
+				<p:inputText id="id" value="#{perBean.persona1.id}"
+					required="true" disabled="true" />
+					
+					
+				<p:outputLabel for="nombre" value="Nombre: " style="border:none;width:5px" />
+				<p:inputText id="nombre" value="#{perBean.persona1.nombre}"
+					required="true" label="nombre">
+					<f:validateLength minimum="2" /> <p:message for="nombre" display="icon" />
+				</p:inputText>
+				
+					
+					
+				<p:outputLabel for="apellido" value="Apellido: " style="border:none;width:5px"/>
+				<p:inputText id="apellido" value="#{perBean.persona1.apellido}"
+					required="true">	
+					<f:validateLength minimum="2" /> <p:message for="apellido" display="icon" />	 		
+				</p:inputText>	
+					
+					
+					
+				<p:outputLabel for="numeroDni" value="Numero Dni: " style="border:none;width:5px"/>
+				<p:inputText id="numeroDni" value="#{perBean.persona1.numeroDni}"
+					required="true">
+					<f:validateLength minimum="2" /> <p:message for="numeroDni" display="icon" />			
+				</p:inputText>
+					
+					
+					
+				<p:outputLabel for="tipoDni" value="Tipo Dni: " />
+					<p:selectOneMenu id="tipoDni"
+						value="#{perBean.persona1.tipoDni}" style="width:125px">
+						<f:selectItem itemLabel="DNI" itemValue="DNI" />
+						<f:selectItem itemLabel="Pasaporte" itemValue="Pasaporte" />
+						<f:selectItem itemLabel="Cedula" itemValue="Cedula" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel for="fechaNacimiento" value="Fecha de Nacimiento: " />
+					<p:calendar  id="fechaNacimiento" value="#{perBean.persona1.fechaNacimiento}" yearRange="c-100:c" locale="es" navigator="true" pattern="dd-MM-yyyy" />
+        				
+				<p:commandButton action="#{perBean.enviar}"
+					oncomplete="PF('dlg').hide()" value="Enviar" update="form2 form:tabla" partialSubmit="true" style="float:right" />
+			</p:panelGrid>
+
+		</p:dialog>
+
+	</h:form>
+
+</h:body>
+</html>
